@@ -1,10 +1,11 @@
 require('dotenv').config()
 const express = require('express')
 const connetDB = require('./DB/database')
+const router = require('./routes/app.routes')
 const app = express()
 const port = process.env.PORT
 
-
+app.use('/',router)
 
 connetDB()
 .then(()=>{
