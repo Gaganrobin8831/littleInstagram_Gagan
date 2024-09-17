@@ -42,6 +42,13 @@ async function HandleDel(req,res) {
         if (!post) {
           return res.status(404).send();
         }
+
+         
+      await Like.deleteMany({ postId: post._id });
+      
+      
+      await Comment.deleteMany({ postId: post._id });
+    
         res.status(200).send({ message: 'Post deleted successfully' });
       } catch (error) {
         res.status(500).send(error);

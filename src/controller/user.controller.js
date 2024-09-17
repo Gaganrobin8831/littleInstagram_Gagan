@@ -48,18 +48,25 @@ async function HandleDel(req, res) {
       if (!user) {
           return res.status(404).send({ message: 'User not found' });
       }
-      // Remove user's likes
+   
+      
       await Like.deleteMany({ userId: user._id });
-      // Remove user's comments
+      
+      
       await Comment.deleteMany({ userId: user._id });
-      // Remove user's posts and associated likes and comments for those posts
+    
+      
       const userPosts = await Post.find({ userId: user._id });
+
       for (const post of userPosts) {
-          // Remove all likes associated with the user's posts
+         
+        
           await Like.deleteMany({ postId: post._id });
-          // Remove all comments associated with the user's posts
+        
+          
           await Comment.deleteMany({ postId: post._id });
-          // Remove the post itself
+         
+          
           await Post.findByIdAndDelete(post._id);
       }
       res.status(200).send({ message: 'User and related data deleted successfully' });
