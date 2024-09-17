@@ -1,14 +1,16 @@
 const mongoose = require('mongoose')
 
 const LikeSchema = new mongoose.Schema({
-    userId:[{
+    userId:{
         type:mongoose.Types.ObjectId,
         ref:'User',
-        unique:true
-    }],
+        required:true
+        
+    },
     postId:{
         type:mongoose.Types.ObjectId,
-        ref:'Post'
+        ref:'Post',
+        required:true
     }
 },{timestamps:true})
 

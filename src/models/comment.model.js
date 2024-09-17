@@ -1,16 +1,16 @@
 const mongoose = require('mongoose')
 
 const CommentSchema = new mongoose.Schema({
-    userId:[{
+    userId:{
         type:mongoose.Types.ObjectId,
         ref:'User',
         required:true
-    }],
-    postId:[{
+    },
+    postId:{
         type:mongoose.Types.ObjectId,
         ref:'Post',
         required:true
-    }],
+    },
     comment:{
         type:String,
         required:true
