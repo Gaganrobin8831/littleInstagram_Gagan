@@ -16,7 +16,7 @@ async function HandlePost(req,res) {
  // Read all users
 async function HandleRead(req,res) {
     try {
-        const posts = await Post.find();
+        const posts = await Post.find().populate('userId');
         res.status(200).send(posts);
       } catch (error) {
         res.status(500).send(error);
