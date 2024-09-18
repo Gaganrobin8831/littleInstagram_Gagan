@@ -44,7 +44,7 @@ async function HandlePost(req,res) {
 async function HandleReadById(req, res) {
   try {
     const id = req.params.id;
-    console.log({ id });
+    // console.log({ id });
     
     const user = await User.findById(id)
       .populate('posts')
