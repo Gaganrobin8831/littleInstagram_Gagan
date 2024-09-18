@@ -26,7 +26,7 @@ async function HandlePost(req,res) {
     // Map through the users to add counts
     const usersWithCounts = users.map(user => ({
       ...user.toObject(), // Convert Mongoose document to plain object
-      
+
    TotalDetail:"THE USER DETAIL",
       USERNAME:user.name,
       postCount: user.posts.length,
@@ -37,6 +37,38 @@ async function HandlePost(req,res) {
     res.status(200).send(usersWithCounts);
   } catch (error) {
     res.status(500).send(error);
+  }
+}
+
+
+async function HandleReadById(req, res) {
+  try {
+    const id = req.params.id;
+    console.log({ id });
+    
+    const user = await User.findById(id)
+      .populate('posts')
+      .populate('comments')
+      .populate('likes');
+
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    // Create the response object with counts
+    const userWithCounts = {
+      ...user.toObject(), // Convert Mongoose document to plain object
+      TotalDetail: "THE USER DETAIL",
+      USERNAME: user.name,
+      postCount: user.posts.length,
+      commentCount: user.comments.length,
+      likeCount: user.likes.length,
+    };
+
+    res.status(200).send(userWithCounts);
+  } catch (error) {
+    console.error(error); // Log the error for debugging
+    res.status(500).send({ message: "Server error", error });
   }
 }
 
@@ -92,5 +124,6 @@ module.exports ={
     HandlePost,
     HandleRead,
     HandlePut,
-    HandleDel
+    HandleDel,
+    HandleReadById
 }
