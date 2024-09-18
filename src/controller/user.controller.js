@@ -16,16 +16,30 @@ async function HandlePost(req,res) {
       
 }
  // Read all users
-async function HandleRead(req,res) {
-   
-        try {
-          const users = await User.find();
-          res.status(200).send(users);
-        } catch (error) {
-          res.status(500).send(error);
-        }
-    
+ async function HandleRead(req, res) {
+  try {
+    const users = await User.find()
+      .populate('posts')
+      .populate('comments')
+      .populate('likes');
+
+    // Map through the users to add counts
+    const usersWithCounts = users.map(user => ({
+      ...user.toObject(), // Convert Mongoose document to plain object
+      
+   TotalDetail:"THE USER DETAIL",
+      USERNAME:user.name,
+      postCount: user.posts.length,
+      commentCount: user.comments.length,
+      likeCount: user.likes.length,
+    }));
+
+    res.status(200).send(usersWithCounts);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 }
+
  // Update a user
 async function HandlePut(req,res) {
     

@@ -4,17 +4,24 @@ const Like = require('../models/like.model');
 const Comment = require('../models/comment.model');
 
 
-async function HandlePost(req,res) {
+async function HandlePost(req, res) {
   try {
-    const existingLike = await Like.findOne({ userId: req.body.userId });
-    if (existingLike) {
-      return res.status(400).send({ message: 'User can only like one post at a time' });
-    }
-    const like = new Like(req.body);
-    await like.save();
-    res.status(201).send(like);
+      // Check if the user has already liked the specific post
+      const existingLike = await Like.findOne({
+          userId: req.body.userId,
+          postId: req.body.postId // Ensure this is provided in the request body
+      });
+
+      if (existingLike) {
+          return res.status(400).send({ message: 'User has already liked this post' });
+      }
+
+      // Create and save the new like
+      const like = new Like(req.body);
+      await like.save();
+      res.status(201).send(like);
   } catch (error) {
-    res.status(400).send(error);
+      res.status(400).send(error);
   }
 }
 

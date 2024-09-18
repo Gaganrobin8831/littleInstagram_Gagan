@@ -6,6 +6,8 @@ const Comment = require('../models/comment.model');
 // Create a user
 async function HandlePost(req,res) {
     try {
+      console.log(req.body);
+      
         const post = new Post(req.body);
         await post.save();
         res.status(201).send(post);

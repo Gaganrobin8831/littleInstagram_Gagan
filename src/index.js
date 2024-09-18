@@ -5,6 +5,7 @@ const Userrouter = require('./routes/user.routes')
 const Postrouter = require('./routes/post.routes')
 const Likerouter = require('./routes/like.routes')
 const Commentrouter = require('./routes/comment.routes')
+const { default: mongoose } = require('mongoose')
 const app = express()
 const port = process.env.PORT
 
@@ -13,6 +14,11 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
+// async function dropExistingIndex() {
+//     const db = mongoose.connection;
+//     await db.collection('likes').dropIndex('userId'); // Adjust if needed
+// }
+// dropExistingIndex()
 //set routes
 app.use('/',Userrouter)
 app.use('/',Postrouter)
