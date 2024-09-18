@@ -13,7 +13,7 @@ const LikeSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-// // Create a compound index to ensure unique combinations of userId and postId
+// Create a compound index to ensure unique combinations of userId and postId
 LikeSchema.index({ userId: 1, postId: 1 }, { unique: true });
 
 const Like = mongoose.model('Like', LikeSchema);

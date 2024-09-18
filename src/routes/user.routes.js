@@ -5,7 +5,8 @@ const {
     HandlePost,
     HandleRead,
     HandlePut,
-    HandleDel
+    HandleDel,
+    HandleReadById
 } = require('../controller/user.controller')
 
 // User CRUD Operations
@@ -15,6 +16,7 @@ Userrouter.post('/users', HandlePost);
 
   // Read all users
   Userrouter.get('/users', HandleRead);
+  Userrouter.get('/users/:id', HandleReadById);
 
   // Update a user
   Userrouter.put('/users/:id', HandlePut);
